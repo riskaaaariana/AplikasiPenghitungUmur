@@ -1,19 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author UserXprO
- */
+    import java.time.LocalDate;
+    import java.time.ZoneId;
+    import java.time.format.DateTimeFormatter;
+    import java.util.Date;
 public class PenghitungUmurFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PenghitungUmurFrame
-     */
+    private PenghitungUmurHelper helper;
+    private volatile boolean stopFetching = false;
+private Thread peristiwaThread;
+    
     public PenghitungUmurFrame() {
         initComponents();
+        helper = new PenghitungUmurHelper();
     }
 
     /**
@@ -24,22 +22,229 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jPanel6 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnKeluar = new javax.swing.JButton();
+        btnHitung = new javax.swing.JButton();
+        dateChooserTanggalLahir = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtUmur = new javax.swing.JTextField();
+        txtHariUlangTahunBerikutnya = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaPeristiwa = new javax.swing.JTextArea();
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Pilih Tanggal Lahir");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        jPanel1.add(jLabel1, gridBagConstraints);
+
+        btnKeluar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnKeluar.setText("Keluar");
+        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKeluarActionPerformed(evt);
+            }
+        });
+
+        btnHitung.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnHitung.setText("Hitung Umur");
+        btnHitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHitungActionPerformed(evt);
+            }
+        });
+
+        dateChooserTanggalLahir.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateChooserTanggalLahirPropertyChange(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dateChooserTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnHitung)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnKeluar)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateChooserTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnKeluar)
+                        .addComponent(btnHitung)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 2;
+        jPanel1.add(jPanel2, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Umur Anda");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 21;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        jPanel1.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Hari Ulang Tahun Berikut Nya");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 21;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        jPanel1.add(jLabel3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanel1.add(txtUmur, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 6, 0);
+        jPanel1.add(txtHariUlangTahunBerikutnya, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        getContentPane().add(jPanel1, gridBagConstraints);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Aplikasi Penghitung Umur");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        getContentPane().add(jLabel4, gridBagConstraints);
+
+        txtAreaPeristiwa.setColumns(20);
+        txtAreaPeristiwa.setLineWrap(true);
+        txtAreaPeristiwa.setRows(5);
+        jScrollPane1.setViewportView(txtAreaPeristiwa);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 0.1;
+        getContentPane().add(jScrollPane1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void dateChooserTanggalLahirPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserTanggalLahirPropertyChange
+        txtUmur.setText("");
+        txtHariUlangTahunBerikutnya.setText("");
+        stopFetching = true;
+if (peristiwaThread != null && peristiwaThread.isAlive()) {
+peristiwaThread.interrupt();
+}
+txtAreaPeristiwa.setText("");
+    }//GEN-LAST:event_dateChooserTanggalLahirPropertyChange
+
+    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+    Date tanggalLahir = dateChooserTanggalLahir.getDate();
+    if (tanggalLahir != null) {
+        // Menghitung umur dan hari ulang tahun berikutnya
+        LocalDate lahir = tanggalLahir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate sekarang = LocalDate.now();
+        String umur = helper.hitungUmurDetail(lahir, sekarang);
+        txtUmur.setText(umur);
+
+        // Menghitung tanggal ulang tahun berikutnya
+        LocalDate ulangTahunBerikutnya = helper.hariUlangTahunBerikutnya(lahir, sekarang);
+        String hariUlangTahunBerikutnya = helper.getDayOfWeekInIndonesian(ulangTahunBerikutnya);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String tanggalUlangTahunBerikutnya = ulangTahunBerikutnya.format(formatter);
+        txtHariUlangTahunBerikutnya.setText(hariUlangTahunBerikutnya + " (" + tanggalUlangTahunBerikutnya + ")");
+
+        // Set stop flag untuk thread sebelumnya
+        stopFetching = true;
+        if (peristiwaThread != null && peristiwaThread.isAlive()) {
+            peristiwaThread.interrupt(); // Beri sinyal ke thread untuk berhenti
+        }
+
+        // Reset flag untuk thread baru
+        stopFetching = false;
+
+        // Mendapatkan peristiwa penting secara asinkron
+        peristiwaThread = new Thread(() -> {
+            try {
+                txtAreaPeristiwa.setText("Tunggu, sedang mengambil data...\n");
+                helper.getPeristiwaBarisPerBaris(ulangTahunBerikutnya, txtAreaPeristiwa, () -> stopFetching);
+                if (!stopFetching) {
+                    javax.swing.SwingUtilities.invokeLater(() ->
+                        txtAreaPeristiwa.append("Selesai mengambil data peristiwa"));
+                }
+            } catch (Exception e) {
+                if (Thread.currentThread().isInterrupted()) {
+                    javax.swing.SwingUtilities.invokeLater(() ->
+                        txtAreaPeristiwa.setText("Pengambilan data dibatalkan.\n"));
+                }
+            }
+        });
+        peristiwaThread.start();
+    } else {
+        // Handle case where tanggalLahir is null
+        txtUmur.setText("Tanggal lahir belum dipilih.");
+        txtHariUlangTahunBerikutnya.setText("");
+        txtAreaPeristiwa.setText("");
+    }
+
+    }//GEN-LAST:event_btnHitungActionPerformed
 
     /**
      * @param args the command line arguments
@@ -67,7 +272,7 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PenghitungUmurFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+ 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -76,6 +281,21 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHitung;
+    private javax.swing.JButton btnKeluar;
+    private com.toedter.calendar.JDateChooser dateChooserTanggalLahir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtAreaPeristiwa;
+    private javax.swing.JTextField txtHariUlangTahunBerikutnya;
+    private javax.swing.JTextField txtUmur;
     // End of variables declaration//GEN-END:variables
 }
